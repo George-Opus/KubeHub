@@ -11,10 +11,10 @@ type Props = {
 };
 
 const TERM_THEME = {
-  background: "#0a1410",
-  foreground: "#c8e6d2",
-  cursor: "#3ee87a",
-  selectionBackground: "#20402f",
+  background: "#0a0f1c",
+  foreground: "#cddcf2",
+  cursor: "#4d9dff",
+  selectionBackground: "#1e3a5f",
 };
 
 export function PodTerminal({ wsUrl, interactive }: Props) {
@@ -63,5 +63,5 @@ export function PodTerminal({ wsUrl, interactive }: Props) {
     };
   }, [wsUrl, interactive]);
 
-  return <div ref={containerRef} className="h-full w-full overflow-hidden rounded-lg bg-[#0a1410]" />;
+  return <div ref={containerRef} className="h-full w-full overflow-hidden rounded-lg bg-[#0a0f1c]" />;
 }

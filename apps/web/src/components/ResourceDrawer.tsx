@@ -110,7 +110,7 @@ export function ResourceDrawer({ clusterId, kind, item, onClose, onChanged }: Pr
           animate={{ x: 0 }}
           exit={{ x: "100%" }}
           transition={{ type: "tween", duration: 0.2 }}
-          className="absolute right-0 top-0 flex h-full w-full max-w-3xl flex-col border-l border-border bg-background font-mono"
+          className="absolute right-0 top-0 flex h-full w-full max-w-3xl flex-col border-l border-border bg-background font-mono text-foreground"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="flex items-center justify-between border-b border-border/60 px-4 py-3">
