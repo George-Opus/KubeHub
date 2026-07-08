@@ -1,0 +1,27 @@
+# Configuration de production pour kubehub.georgeop.us
+# Déploiement :
+#   helm upgrade --install kubehub deploy/helm/kubehub \
+#     --namespace kubehub --create-namespace \
+#     -f deploy/helm/kubehub/values-prod.yaml
+
+config:
+  # Origine du navigateur (appels API en relatif sur le même hôte).
+  corsOrigins: "https://kubehub.georgeop.us,http://kubehub.georgeop.us"
+  # Inscriptions publiques désactivées : personne ne peut créer de compte
+  # (hormis le tout premier compte admin au bootstrap).
+  allowRegistration: false
+
+ingress:
+  enabled: true
+  className: traefik
+  host: kubehub.georgeop.us
+  annotations:
+    # Écoute HTTP (80) et HTTPS (443) via Traefik k3s.
+    traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
+    traefik.ingress.kubernetes.io/service.passhostheader: "true"
+    # Émission automatique du certificat Let's Encrypt via cert-manager.
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  tls:
+    - secretName: kubehub-tls
+      hosts:
+        - kubehub.georgeop.us

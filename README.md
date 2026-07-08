@@ -106,6 +106,31 @@ Aperçu des manifestes sans rien appliquer :
 helm template kubehub deploy/helm/kubehub
 ```
 
+### Déploiement de production (domaine + HTTPS)
+
+Un fichier [`values-prod.yaml`](deploy/helm/kubehub/values-prod.yaml) est fourni
+pour l'instance publique `kubehub.georgeop.us` (inscriptions désactivées, TLS
+Let's Encrypt via cert-manager).
+
+```bash
+# 1. cert-manager (une fois par cluster)
+helm repo add jetstack https://charts.jetstack.io && helm repo update
+helm upgrade --install cert-manager jetstack/cert-manager \
+  --namespace cert-manager --create-namespace --set crds.enabled=true
+
+# 2. ClusterIssuer Let's Encrypt (une fois par cluster)
+kubectl apply -f deploy/helm/kubehub/clusterissuer.example.yaml
+
+# 3. KubeHub avec le domaine + TLS
+helm upgrade --install kubehub deploy/helm/kubehub \
+  --namespace kubehub --create-namespace \
+  -f deploy/helm/kubehub/values-prod.yaml
+```
+
+Le certificat est émis automatiquement (challenge HTTP-01) et l'app est servie
+en HTTPS. Adaptez `ingress.host`, `config.corsOrigins` et l'email du
+ClusterIssuer à votre domaine.
+
 ### Points clés du chart
 
 - `SECRET_KEY` et `FERNET_KEY` sont **générés automatiquement** au premier déploiement et **préservés** lors des `helm upgrade`.
