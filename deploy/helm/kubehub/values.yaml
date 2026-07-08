@@ -61,6 +61,8 @@ ingress:
     traefik.ingress.kubernetes.io/service.passhostheader: "true"
   # host vide = catch-all (toutes les hôtes)
   host: ""
+  # Redirection automatique HTTP -> HTTPS (Middleware Traefik).
+  redirectHttps: false
   apiPath: /api
   webPath: /
   tls: []

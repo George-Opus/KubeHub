@@ -1,0 +1,12 @@
+{{- if and .Values.ingress.enabled .Values.ingress.redirectHttps }}
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: {{ include "kubehub.fullname" . }}-https-redirect
+  labels:
+    {{- include "kubehub.labels" . | nindent 4 }}
+spec:
+  redirectScheme:
+    scheme: https
+    permanent: true
+{{- end }}

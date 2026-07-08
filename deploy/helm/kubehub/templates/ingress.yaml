@@ -5,9 +5,14 @@ metadata:
   name: {{ include "kubehub.fullname" . }}
   labels:
     {{- include "kubehub.labels" . | nindent 4 }}
-  {{- with .Values.ingress.annotations }}
+  {{- if or .Values.ingress.annotations .Values.ingress.redirectHttps }}
   annotations:
+    {{- with .Values.ingress.annotations }}
     {{- toYaml . | nindent 4 }}
+    {{- end }}
+    {{- if .Values.ingress.redirectHttps }}
+    traefik.ingress.kubernetes.io/router.middlewares: {{ .Release.Namespace }}-{{ include "kubehub.fullname" . }}-https-redirect@kubernetescrd
+    {{- end }}
   {{- end }}
 spec:
   {{- if .Values.ingress.className }}
