@@ -1,0 +1,26 @@
+KubeHub est déployé ! 🚢
+
+  Release   : {{ .Release.Name }}
+  Namespace : {{ .Release.Namespace }}
+
+{{- if .Values.ingress.enabled }}
+
+Accès via l'Ingress :
+{{- if .Values.ingress.host }}
+  http://{{ .Values.ingress.host }}{{ .Values.ingress.webPath }}
+{{- else }}
+  http://<adresse-de-votre-ingress>{{ .Values.ingress.webPath }}
+{{- end }}
+{{- else }}
+
+Ingress désactivé. Exposez le service web ({{ include "kubehub.web.fullname" . }}:3000)
+avec un port-forward :
+
+  kubectl -n {{ .Release.Namespace }} port-forward svc/{{ include "kubehub.web.fullname" . }} 3000:3000
+{{- end }}
+
+Premier lancement : créez le compte administrateur depuis la page de connexion,
+puis ajoutez vos clusters en collant leur kubeconfig.
+
+Vérifiez le déploiement :
+  kubectl -n {{ .Release.Namespace }} get pods,svc,ingress

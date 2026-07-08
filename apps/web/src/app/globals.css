@@ -1,0 +1,238 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 150 20% 97%;
+    --foreground: 150 25% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 150 25% 10%;
+    --muted: 150 14% 93%;
+    --muted-foreground: 150 8% 40%;
+    --border: 150 12% 86%;
+    --primary: 150 70% 36%;
+    --primary-foreground: 0 0% 100%;
+    --accent: 150 14% 93%;
+    --accent-foreground: 150 25% 10%;
+    --destructive: 0 72% 48%;
+    --ring: 150 70% 36%;
+    --sidebar: 150 20% 98%;
+    --terminal-dock-height: 0px;
+  }
+
+  .dark {
+    --background: 150 18% 4%;
+    --foreground: 145 25% 82%;
+    --card: 150 16% 6%;
+    --card-foreground: 145 25% 82%;
+    --muted: 150 12% 11%;
+    --muted-foreground: 145 12% 48%;
+    --border: 150 14% 14%;
+    --primary: 145 80% 55%;
+    --primary-foreground: 150 30% 5%;
+    --accent: 150 14% 12%;
+    --accent-foreground: 145 30% 88%;
+    --destructive: 0 74% 58%;
+    --ring: 145 80% 55%;
+    --sidebar: 150 20% 3%;
+  }
+
+  html {
+    @apply antialiased;
+  }
+
+  html.dark {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-background text-foreground min-h-screen;
+  }
+
+  ::selection {
+    @apply bg-primary/25 text-foreground;
+  }
+
+  * {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  *::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-card text-card-foreground border border-border/80 rounded-xl;
+  }
+
+  .card-hover {
+    @apply card transition-all duration-200 hover:border-border;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-all duration-150 hover:brightness-110 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-50;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg border border-transparent bg-transparent px-3 py-2 text-sm font-medium text-muted-foreground transition-all duration-150 hover:bg-accent hover:text-foreground active:scale-[0.98];
+  }
+
+  .btn-danger {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg border border-destructive/40 bg-destructive/10 px-3 py-2 text-sm font-medium text-destructive transition-all duration-150 hover:bg-destructive/20 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-50;
+  }
+
+  .btn-icon {
+    @apply inline-flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground transition-all duration-150 hover:bg-accent hover:text-foreground active:scale-95;
+  }
+
+  .input-field {
+    @apply w-full rounded-lg border border-border bg-card px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground outline-none transition-colors duration-150 focus:border-primary/50 focus:ring-1 focus:ring-primary/30;
+  }
+
+  .label {
+    @apply mb-1 block text-[11px] font-medium uppercase tracking-widest text-muted-foreground;
+  }
+
+  .rail-link {
+    @apply relative flex h-11 w-11 items-center justify-center rounded-md text-muted-foreground transition-colors duration-150 hover:bg-accent hover:text-foreground;
+  }
+
+  .rail-link-active {
+    @apply bg-primary/10 text-primary hover:bg-primary/15 hover:text-primary;
+  }
+
+  .console-row {
+    @apply border-b border-border/40 transition-colors duration-100 hover:bg-primary/5;
+  }
+
+  .badge {
+    @apply inline-flex items-center gap-1 rounded-md border px-1.5 py-0.5 text-[11px] font-medium;
+  }
+
+  .term-btn {
+    @apply inline-flex items-center gap-1 rounded px-1.5 py-0.5 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-primary disabled:pointer-events-none disabled:opacity-50;
+  }
+
+  .cursor-blink::after {
+    content: "";
+    display: inline-block;
+    width: 0.55em;
+    height: 1.05em;
+    margin-left: 2px;
+    vertical-align: text-bottom;
+    background: hsl(var(--primary));
+    animation: term-blink 1.05s steps(1) infinite;
+  }
+
+  .status-blink {
+    animation: term-node-blink 1.6s ease-in-out infinite;
+  }
+
+  .scroll-hidden {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .scroll-hidden::-webkit-scrollbar {
+    display: none;
+  }
+
+  .dot-grid {
+    background-image: radial-gradient(circle, hsl(var(--border)) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  .kubehub-logo-spin {
+    transform-origin: 24px 24px;
+    animation: kubehub-wheel-spin 24s linear infinite;
+  }
+
+  .kubehub-logo-orbit {
+    transform-origin: 24px 24px;
+    animation: kubehub-orbit-tilt 12s ease-in-out infinite alternate;
+  }
+
+  .kubehub-logo-node {
+    animation: kubehub-node-pulse 2.4s ease-in-out infinite;
+  }
+
+  .kubehub-logo-node-delay {
+    animation-delay: 0.6s;
+  }
+
+  .kubehub-logo-node-delay-2 {
+    animation-delay: 1.2s;
+  }
+
+  .kubehub-logo-node-delay-3 {
+    animation-delay: 1.8s;
+  }
+}
+
+@keyframes term-blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  50.01%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes term-node-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+@keyframes kubehub-wheel-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes kubehub-orbit-tilt {
+  from {
+    transform: rotate(-16deg);
+  }
+  to {
+    transform: rotate(16deg);
+  }
+}
+
+@keyframes kubehub-node-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.25);
+  }
+}
+
+.xterm {
+  padding: 10px 12px;
+  height: 100%;
+}
+
+.xterm-viewport {
+  border-radius: 0;
+}
+
+.xterm-screen {
+  height: 100%;
+}

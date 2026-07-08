@@ -1,0 +1,69 @@
+# Valeurs par défaut du chart KubeHub.
+# Surchargez-les avec --set ou un fichier -f values-prod.yaml.
+
+nameOverride: ""
+fullnameOverride: ""
+
+imagePullSecrets: []
+# - name: mon-registry-secret
+
+api:
+  image:
+    repository: georgeopus/kubehub
+    tag: api
+    pullPolicy: Always
+  replicas: 1
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+web:
+  image:
+    repository: georgeopus/kubehub
+    tag: web
+    pullPolicy: Always
+  replicas: 1
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+config:
+  # Origines CORS autorisées (séparées par des virgules).
+  corsOrigins: "http://localhost"
+  databaseUrl: "sqlite:///./data/kubehub.db"
+  allowRegistration: false
+
+secrets:
+  # Laissez vide pour une génération automatique au premier déploiement.
+  # Les valeurs existantes sont préservées lors des `helm upgrade`.
+  secretKey: ""
+  fernetKey: ""
+
+persistence:
+  enabled: true
+  accessMode: ReadWriteOnce
+  size: 1Gi
+  storageClass: ""
+
+ingress:
+  enabled: true
+  className: ""
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+    traefik.ingress.kubernetes.io/service.passhostheader: "true"
+  # host vide = catch-all (toutes les hôtes)
+  host: ""
+  apiPath: /api
+  webPath: /
+  tls: []
+  # - secretName: kubehub-tls
+  #   hosts:
+  #     - kubehub.example.com

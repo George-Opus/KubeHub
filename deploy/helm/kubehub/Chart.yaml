@@ -1,0 +1,20 @@
+apiVersion: v2
+name: kubehub
+description: >-
+  KubeHub — gestion multi-cluster Kubernetes façon Lens, en version web.
+  Login, ajout de clusters par kubeconfig, exploration des ressources
+  (workloads, réseau, stockage, config), logs et shell des pods.
+  Backend FastAPI + frontend Next.js.
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+keywords:
+  - kubehub
+  - kubernetes
+  - lens
+  - multicluster
+home: https://github.com/George-Opus/KubeHub
+sources:
+  - https://github.com/George-Opus/KubeHub
+maintainers:
+  - name: George-Opus

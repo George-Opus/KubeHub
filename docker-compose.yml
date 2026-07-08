@@ -1,0 +1,29 @@
+services:
+  api:
+    build:
+      context: ./apps/api
+    restart: unless-stopped
+    environment:
+      SECRET_KEY: ${SECRET_KEY}
+      DATABASE_URL: sqlite:///./data/kubehub.db
+      CORS_ORIGINS: ${CORS_ORIGINS}
+      FERNET_KEY: ${FERNET_KEY:-}
+      ALLOW_REGISTRATION: ${ALLOW_REGISTRATION:-false}
+    volumes:
+      - kubehub_data:/app/data
+    ports:
+      - "8000:8000"
+
+  web:
+    build:
+      context: ./apps/web
+      args:
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
+    restart: unless-stopped
+    depends_on:
+      - api
+    ports:
+      - "3000:3000"
+
+volumes:
+  kubehub_data:
